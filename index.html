@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      header,
+      footer {
+        width: 100%;
+        text-align: center;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 0;
+      }
+
+      .container {
+        height: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #ffffff;
+        padding: 50px;
+        border-radius: 10px;
+        margin: 0 20vw;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-size: 3rem;
+        text-wrap: wrap;
+      }
+
+      h1 {
+        color: #ffffff;
+      }
+
+      p {
+        color: #666666;
+      }
+
+      code {
+        background-color: #f0f0f0;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      footer a {
+        color: #00bcd4;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Tic Tac Toe</h1>
+    </header>
+    <div class="container">
+      <p>Open the console to play the game.</p>
+      <p>
+        Instructions: Write <code>game.playRound(n)</code> where
+        <code>n</code> is the number of the cell as visualized in the console.
+      </p>
+    </div>
+    <footer>
+      <p>
+        Check out my GitHub:
+        <a href="https://github.com/tarek0m" target="_blank">tarek0m</a>
+      </p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
