@@ -41,10 +41,28 @@ p {
   color: #666666;
 }
 
-code {
-  background-color: #f0f0f0;
-  padding: 5px;
-  border-radius: 5px;
+.playground {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  cursor: pointer;
+  border: 2px solid #333;
+}
+
+.cell:hover {
+  background-color: #d0d0d0;
+  color: #666666;
 }
 
 footer a {
