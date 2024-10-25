@@ -154,6 +154,8 @@ function GameController(
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
 
+  const getUsedPlace = () => players[0].places.concat(players[1].places);
+
   const printNewBoard = () => {
     console.log(
       `%c${getActivePlayer().name}'s turn.`,
@@ -162,12 +164,14 @@ function GameController(
     board.printBoard();
   };
 
-  const checkWinner = () => {
+  const gameState = () => {
     return Calculations.winningCombinations.filter((combination) =>
       Calculations.isSubset(getActivePlayer().places, combination)
     ).length > 0
-      ? true
-      : false;
+      ? 'winner'
+      : getUsedPlace().length === 9
+      ? 'tie'
+      : 'no winner';
   };
 
   const resetGame = (winner) => {
@@ -192,14 +196,21 @@ function GameController(
 
     if (board.placeMark(row, column, getActivePlayer().mark)) {
       addPlace(board.getCellOrder(row, column));
-      if (checkWinner()) {
+      if (gameState() === 'winner') {
         board.printBoard();
         console.log(
           `%c${getActivePlayer().name} wins!`,
           'color: #4caf50; font-size: 20px; font-weight: bold;'
         );
-        resetGame(getActivePlayer());
-        return;
+        // resetGame(getActivePlayer());
+        return 'win';
+      } else if (gameState() === 'tie') {
+        board.printBoard();
+        console.log(
+          "%cIt's a tie!",
+          'color: #ff9800; font-size: 16px; font-weight: bold;'
+        );
+        return 'tie';
       } else {
         switchActivePlayer();
         printNewBoard();
@@ -213,7 +224,105 @@ function GameController(
   };
 
   printNewBoard();
-  return { playRound };
+  return { playRound, getBoard: board.getBoard, getActivePlayer };
 }
 
-const game = GameController();
+function ScreenController(playerOneName, playerTwoName) {
+  // initialize game controller
+  const game = GameController(playerOneName, playerTwoName);
+
+  // DOM elements
+  const playerTurnDiv = document.querySelector('.turn');
+  const playgroundDiv = document.querySelector('.playground');
+
+  // update screen function
+  const updateScreen = () => {
+    // clear screen
+    playgroundDiv.innerHTML = '';
+
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    playerTurnDiv.innerHTML = `${activePlayer.name}'s turn...`;
+
+    // .cell:hover::after {
+    //   content: "X";
+    // }
+
+    board.forEach((row) =>
+      row.forEach((cell) => {
+        const cellButton = document.createElement('button');
+        cellButton.classList.add('cell');
+        cellButton.dataset.order = cell.getOrder();
+        cellButton.innerHTML = cell.getValue();
+        playgroundDiv.appendChild(cellButton);
+      })
+    );
+  };
+
+  function clickHandlerPlayground(e) {
+    const selectedCell = e.target.dataset.order;
+
+    if (!selectedCell) return;
+
+    const gameState = game.playRound(selectedCell);
+
+    if (gameState === 'win') {
+      updateScreen();
+      playgroundDiv.childNodes.forEach((child) => (child.disabled = true));
+      playerTurnDiv.innerHTML = `${game.getActivePlayer().name} wins!`;
+      return;
+    }
+
+    if (gameState === 'tie') {
+      updateScreen();
+      playgroundDiv.childNodes.forEach((child) => (child.disabled = true));
+      playerTurnDiv.innerHTML = `${game.getActivePlayer().name} wins!`;
+      playerTurnDiv.innerHTML = "It's a tie!";
+      return;
+    }
+    updateScreen();
+  }
+
+  playgroundDiv.addEventListener('click', clickHandlerPlayground);
+
+  // initial render
+  updateScreen();
+
+  return;
+}
+
+// Create dialog menu
+const createDialog = () => {
+  const startDialog = document.querySelector('#startDialog');
+  const playerOneInput = document.createElement('input');
+  const playerTwoInput = document.createElement('input');
+  const startButton = document.createElement('button');
+
+  playerOneInput.id = 'Player1Input';
+  playerTwoInput.id = 'Player2Input';
+  playerOneInput.placeholder = 'Player 1 Name';
+  playerTwoInput.placeholder = 'Player 2 Name';
+  startButton.innerHTML = 'Start';
+
+  startDialog.appendChild(playerOneInput);
+  startDialog.appendChild(playerTwoInput);
+  startDialog.appendChild(startButton);
+
+  startButton.addEventListener('click', () => {
+    playerOneName =
+      document.querySelector('#Player1Input').value == ''
+        ? 'Player 1'
+        : document.querySelector('#Player1Input').value;
+    playerTwoName =
+      document.querySelector('#Player2Input').value == ''
+        ? 'Player 2'
+        : document.querySelector('#Player2Input').value;
+    startDialog.close();
+    return ScreenController(playerOneName, playerTwoName);
+  });
+
+  startDialog.showModal();
+};
+
+createDialog();
