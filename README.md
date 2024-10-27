@@ -32,3 +32,6 @@ Or you can play the game live [here](https://tarek0m.github.io/odin-tic-tac-toe/
 - [tarek0m](https://github.com/tarek0m)
 
 Enjoy playing Tic Tac Toe!
+
+## Console
+For console version of the game, please switch to [main](https://github.com/tarek0m/odin-tic-tac-toe/tree/main) branch
