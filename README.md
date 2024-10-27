@@ -54,3 +54,6 @@ game.playRound(2); // Player 1 places 'X' in cell 2 and wins
 - [tarek0m](https://github.com/tarek0m)
 
 Enjoy playing Tic Tac Toe!
+
+## GUI
+For GUI version of the game, please switch to [gui-version](https://github.com/tarek0m/odin-tic-tac-toe/tree/gui-version) branch
