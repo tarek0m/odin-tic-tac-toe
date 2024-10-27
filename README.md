@@ -24,7 +24,8 @@ Or you can play the game live [here](https://tarek0m.github.io/odin-tic-tac-toe/
 
 ## Screenshot
 
-![Tic Tac Toe Screenshot](./Screenshot.png)
+![Tic Tac Toe Screenshot](./Screenshots/GUI%20Screenshot%202.png)
+![Tic Tac Toe Screenshot](./Screenshots/GUI%20Screenshot.png)
 
 ## Author
 
